@@ -1,19 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const LichSuMua = () => {
     const idNguoiDung = localStorage.getItem('userId');
     const [lichSuMua, setLichSuMua] = useState([]);
     const [expanded, setExpanded] = useState(null);  // Trạng thái cho ảnh chi tiết
+    const [notification, setNotification] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        // Kiểm tra token
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setNotification("Vui lòng đăng nhập để xem lịch sử mua!");
+            setIsLoggedIn(false);
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
+            return;
+        }
 
         fetch(`http://localhost:8080/api/nguoidung/${idNguoiDung}/accgames`)
             .then((response) => response.json())
             .then((data) => setLichSuMua(data))
             .catch((error) => console.error("Error fetching purchase history:", error));
-    }, [idNguoiDung]);
+    }, [idNguoiDung, navigate]);
 
     const toggleImageDetails = (accId) => {
         if (expanded === accId) {
@@ -23,12 +37,40 @@ const LichSuMua = () => {
         }
     };
 
+    if (!isLoggedIn) {
+        return (
+            <div className="container mx-auto p-4">
+                {notification && (
+                    <div
+                        className="fixed top-0 right-0 p-4 bg-red-500 text-white rounded-lg shadow-lg"
+                        style={{
+                            zIndex: 9999,
+                        }}
+                    >
+                        {notification}
+                    </div>
+                )}
+                <p className="text-center mt-6 text-red-600 text-lg font-bold">Vui lòng đăng nhập để xem lịch sử mua!</p>
+            </div>
+        );
+    }
+
     if (lichSuMua.length === 0) {
         return <p className="text-center mt-6">Không có lịch sử mua hàng.</p>;
     }
 
     return (
         <div className="container mx-auto p-4">
+            {notification && (
+                <div
+                    className="fixed top-0 right-0 p-4 bg-red-500 text-white rounded-lg shadow-lg"
+                    style={{
+                        zIndex: 9999,
+                    }}
+                >
+                    {notification}
+                </div>
+            )}
             <h2 className="text-3xl text-center text-red-600 font-bold mb-6">
                 Lịch sử mua tài khoản
             </h2>

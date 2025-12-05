@@ -11,6 +11,16 @@ const AccYeuThich = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
 
+        // Kiểm tra token
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setNotification("Vui lòng đăng nhập để xem danh sách yêu thích!");
+            setTimeout(() => {
+                navigate("/");
+            }, 2000);
+            return;
+        }
+
         // Lấy id người dùng từ localStorage
         const idNguoiDung = localStorage.getItem("userId");
 
@@ -70,7 +80,7 @@ const AccYeuThich = () => {
     };
 
     // Hành động khi nhấn "Mua ngay"
-    const handleBuyNow = (accId,e) => {
+    const handleBuyNow = (accId, e) => {
         e.stopPropagation();
         navigate(`/thanhtoan/${accId}`);  // Điều hướng đến trang thanh toán với id tài khoản game
     };

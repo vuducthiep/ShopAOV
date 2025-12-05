@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
 import QuanLyNguoiDung from './QuanLyNguoiDung';
+import AccGame from './AccGame';
 
 const AccountManager = () => <div>Quản Lý Tài Khoản Game</div>;
 const TransactionManager = () => <div>Quản Lý Giao Dịch</div>;
@@ -17,6 +18,7 @@ const AdminLayout = () => {
           <Route path="/accounts" element={<AccountManager />} />
           <Route path="/users" element={<QuanLyNguoiDung />} />
           <Route path="/transactions" element={<TransactionManager />} />
+          <Route path="/accgames" element={<AccGame />} />
         </Routes>
       </div>
     </div>

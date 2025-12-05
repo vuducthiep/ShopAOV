@@ -27,6 +27,12 @@ const Sidebar = () => {
               Quản Lý Giao Dịch
             </Link>
           </li>
+          <li>
+            <Link to="/admin/accgames" className="block p-3 hover:bg-gray-700 rounded">
+              Quản Lý Acc Game
+            </Link>
+          </li>
+
         </ul>
       </nav>
     </div>

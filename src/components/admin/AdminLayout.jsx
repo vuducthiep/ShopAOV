@@ -4,9 +4,9 @@ import SideBar from './SideBar';
 import Dashboard from './Dashboard';
 import QuanLyNguoiDung from './QuanLyNguoiDung';
 import AccGame from './AccGame';
+import QuanLyGiaoDich from './QuanLyGiaoDich';
 
 const AccountManager = () => <div>Quản Lý Tài Khoản Game</div>;
-const TransactionManager = () => <div>Quản Lý Giao Dịch</div>;
 
 const AdminLayout = () => {
   return (
@@ -17,7 +17,7 @@ const AdminLayout = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/accounts" element={<AccountManager />} />
           <Route path="/users" element={<QuanLyNguoiDung />} />
-          <Route path="/transactions" element={<TransactionManager />} />
+          <Route path="/QuanLyGiaoDich" element={<QuanLyGiaoDich />} />
           <Route path="/accgames" element={<AccGame />} />
         </Routes>
       </div>

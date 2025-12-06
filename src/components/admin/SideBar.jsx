@@ -23,7 +23,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/transactions" className="block p-3 hover:bg-gray-700 rounded">
+            <Link to="/admin/QuanLyGiaoDich" className="block p-3 hover:bg-gray-700 rounded">
               Quản Lý Giao Dịch
             </Link>
           </li>

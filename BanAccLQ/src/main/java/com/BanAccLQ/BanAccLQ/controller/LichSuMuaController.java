@@ -1,6 +1,7 @@
 package com.BanAccLQ.BanAccLQ.controller;
 
 import com.BanAccLQ.BanAccLQ.DTO.AccGameResponseDTO;
+import com.BanAccLQ.BanAccLQ.DTO.AdminLichSuMuaDTO;
 import com.BanAccLQ.BanAccLQ.DTO.PaymentRequestDTO;
 import com.BanAccLQ.BanAccLQ.model.AccGame;
 import com.BanAccLQ.BanAccLQ.model.LichSuMua;
@@ -23,7 +24,8 @@ public class LichSuMuaController {
     @PostMapping("/buy")
     public ResponseEntity<AccGameResponseDTO> buyAccGame(@RequestBody PaymentRequestDTO paymentRequest) {
         try {
-            AccGame accGame = lichSuMuaService.processPayment(paymentRequest.getUserId(), paymentRequest.getAccGameId());
+            AccGame accGame = lichSuMuaService.processPayment(paymentRequest.getUserId(),
+                    paymentRequest.getAccGameId());
 
             // Chuyển đổi sang DTO
             AccGameResponseDTO responseDTO = new AccGameResponseDTO();
@@ -45,6 +47,9 @@ public class LichSuMuaController {
         }
     }
 
-
+    @GetMapping("/getAllAdminLichSuMua")
+    public List<AdminLichSuMuaDTO> getAllAdminLichSuMua() {
+        return lichSuMuaService.getAllAdminLichSuMua();
+    }
 
 }

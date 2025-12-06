@@ -1,10 +1,12 @@
 package com.BanAccLQ.BanAccLQ.service;
 
+import com.BanAccLQ.BanAccLQ.DTO.AdminLichSuMuaDTO;
 import com.BanAccLQ.BanAccLQ.model.AccGame;
 import com.BanAccLQ.BanAccLQ.model.LichSuMua;
 import com.BanAccLQ.BanAccLQ.model.NguoiDung;
 import com.BanAccLQ.BanAccLQ.repository.AccGameRepository;
 import com.BanAccLQ.BanAccLQ.repository.LichSuMuaRepository;
+import com.BanAccLQ.BanAccLQ.repository.AdminLichSuMuaRepository;
 import com.BanAccLQ.BanAccLQ.repository.NguoiDungRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LichSuMuaService {
@@ -25,6 +28,9 @@ public class LichSuMuaService {
 
     @Autowired
     private LichSuMuaRepository lichSuMuaRepository;
+
+    @Autowired
+    private AdminLichSuMuaRepository adminLichSuMuaRepository;
 
     public AccGame processPayment(Integer userId, Integer accGameId) {
         // Tìm người dùng theo ID
@@ -67,6 +73,17 @@ public class LichSuMuaService {
         return accGame;
     }
 
-    // Hàm lấy danh sách các AccGame mà người dùng đã mua
+    // Hàm lấy danh sách các AccGame đã được mua
+    public List<AdminLichSuMuaDTO> getAllAdminLichSuMua() {
+        return adminLichSuMuaRepository.findAll()
+                .stream()
+                .map(lsm -> new AdminLichSuMuaDTO(
+                        lsm.getId(),
+                        lsm.getAccGame() != null ? lsm.getAccGame().getId() : null,
+                        lsm.getNguoiDung() != null ? lsm.getNguoiDung().getId() : null,
+                        lsm.getNguoiDung() != null ? lsm.getNguoiDung().getTen() : null,
+                        lsm.getCreateAt()))
+                .collect(Collectors.toList());
+    }
 
 }
